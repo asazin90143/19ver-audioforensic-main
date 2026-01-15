@@ -570,12 +570,11 @@ export default function LiveVisualization({ audioData }: LiveVisualizationProps)
       const handleClick = (event: MouseEvent) => {
         const rect = canvas.getBoundingClientRect()
         const x = event.clientX - rect.left
-        const y = event.clientY - rect.top
 
         const time = (x / canvas.width) * audioData.duration
 
         // Seek audio to clicked time
-        if (audioRef.current) {
+        if (audioRef.current && Number.isFinite(time) && time >= 0) {
           audioRef.current.currentTime = time
           setCurrentTime(time)
         }
@@ -730,7 +729,7 @@ export default function LiveVisualization({ audioData }: LiveVisualizationProps)
                     const rect = e.currentTarget.getBoundingClientRect()
                     const x = e.clientX - rect.left
                     const time = (x / rect.width) * audioData.duration
-                    if (audioRef.current) {
+                    if (audioRef.current && Number.isFinite(time) && time >= 0) {
                       audioRef.current.currentTime = time
                       setCurrentTime(time)
                     }
